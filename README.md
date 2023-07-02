@@ -6,82 +6,55 @@
     </a>
 </p>
 
-<h3 align="center">Home Energy Monitor (v2)</h3>
+<h3 align="center">Smart Socket v1.0</h3>
 
-<div align="center">
 
-[![GitHub Issues](https://img.shields.io/github/issues/Savjee/home-energy-monitor.svg)](https://github.com/Savjee/home-energy-monitor/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/Savjee/home-energy-monitor.svg)](https://github.com/Savjee/home-energy-monitor/pulls)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
-**⚠️ This is a work in progress. By no means is this production ready.**
-</div>
+IOT based Smart socket : monitors electricity consumption of the socket outlet and remote control with home assistant.The total power consumption per hour, voltage level, and current are displayed on an OLED display, and are sent to home assistant via MQTT protocol
 
----
+## Features
 
-ESP32-based Home Energy Monitor: monitors electricity consumption of your entire house with a single CT sensor.
+1. Provive realtime power readings
+2. Constant wifi connection
+3. Inbuit MQTT discovery assistant
+4. remote control of the power outlet
+5. Works with Home assistant
 
-## Structure
 
-This project consists out of multiple components:
 
-| Folder            | Description         | Build status | 
-| ----------------- | ------------------- | ------------ | 
-| `src-app`         | Mobile app (Ionic)  | n/a |
-| `src-aws`         | Serverless AWS backend + GraphQL API | ![AWS Build Status](https://github.com/Savjee/home-energy-monitor/workflows/aws/badge.svg) |
-| `src-esp32`       | Firmware for the ESP32 (measuring device) | ![Firmware Build Status](https://github.com/Savjee/home-energy-monitor/workflows/firmware/badge.svg) |
 
-(TODO: add instructions on how to deploy all of this. 😅)
 
-## Video explanation
-
-<div align="center">
-
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/ah3ezprtgmc/0.jpg)](https://www.youtube.com/watch?v=ah3ezprtgmc)
-
-*[https://www.youtube.com/watch?v=ah3ezprtgmc](https://www.youtube.com/watch?v=ah3ezprtgmc)*
-</div>
-
-Read my blog post for more instructions: [https://savjee.be/2019/07/Home-Energy-Monitor-ESP32-CT-Sensor-Emonlib/](https://savjee.be/2019/07/Home-Energy-Monitor-ESP32-CT-Sensor-Emonlib/)
-
-## Cloud Architecture
-
-This is the cloud architecture that powers the energy meter and the app:
-
-![AWS Cloud Architecture](https://savjee.github.io/home-energy-monitor/readme-images/architecture.png)
-
-In a nutshell:
-* The ESP32 has a MQTT connection with AWS IoT Core
-* Every 30 seconds, 30 measurements are sent to AWS
-* These measurements are stored in DynamoDB (IoT Rule)
-* Once a day, all readings from the previous day are archived to S3
-* A GraphQL API (hosted on Lambda) exposes the data stored in DynamoDB
 
 ## Screenshots
 
-Web dashboard, built on top of the GraphQL API:
+3D model:
 
-![Screenshot Web Dashboard](https://savjee.github.io/home-energy-monitor/readme-images/web-dashboard.png)
 
-What is displayed on the ESP32 OLED display:
 
-![Screenshot ESP32 OLED](https://savjee.github.io/home-energy-monitor/readme-images/esp32-oled.jpg)
+Schematics:
 
-## DIY Requirements
 
-To build your own Energy Monitor you need the following hardware:
+
+PCB:
+
+
+3D:
+
+## Hardware Requirements
 
 * ESP32
-* CT sensor: YHDC SCT-013-030 (30A/1V)
-* 10µF capacitor
-* 2 resistors (between 10k-470kΩ)
+* ACS712 Current sensor
+* HLK-5M05
+* 2P Screw terminal
+* SSD1306 OLED
+* 5V coil Relay
+* 1N4001 relay
+* 1K resistor x2
+* BC572 Transistor
+* LED
 
-Other requirements:
-* AWS Account (Should be able to run in free-tier)
-* Install [PlatformIO](https://platformio.org) on your system
-* Drivers for your ESP32 board
 
-Read my blog post for more instructions: [https://savjee.be/2019/07/Home-Energy-Monitor-ESP32-CT-Sensor-Emonlib/](https://savjee.be/2019/07/Home-Energy-Monitor-ESP32-CT-Sensor-Emonlib/)
+
 
 
 ## Contribute
