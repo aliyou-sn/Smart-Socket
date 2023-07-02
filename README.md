@@ -10,7 +10,7 @@
 
 
 
-IOT based Smart socket : monitors electricity consumption of the socket outlet and remote control with home assistant.The total power consumption per hour, voltage level, and current are displayed on an OLED display, and are sent to home assistant via MQTT protocol
+IOT based Smart socket that monitors electricity consumption of the socket outlet and remote control with home assistant.The total power consumption per hour, voltage level, and current are displayed on an OLED display, and are sent to home assistant via MQTT protocol
 
 ## Features
 
@@ -37,6 +37,9 @@ Schematics:
 
 PCB:
 
+<a href="https://github.com/Savjee/home-energy-monitor" rel="noopener">
+        <img width=200px height=200px src = "https://github.com/aliyou-sn/Smart-Socket/blob/main/images/PCB3D.png" alt="Smart Socket">
+    </a>
 
 3D:
 
