@@ -32,9 +32,10 @@ IOT based Smart socket that monitors electricity consumption of the socket outle
 
 
 Schematics:
-
-
-
+Schematic_Isocket.png
+<a href="https://github.com/Savjee/home-energy-monitor" rel="noopener">
+        <img width=200px height=200px src = "https://github.com/aliyou-sn/Smart-Socket/blob/main/images/PCB3D.png" alt="Smart Socket">
+    </a>
 PCB:
 
 <a href="https://github.com/Savjee/home-energy-monitor" rel="noopener">
