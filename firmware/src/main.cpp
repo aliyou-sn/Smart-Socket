@@ -2,7 +2,7 @@
 #include <WiFi.h>
 #include <ArduinoJson.h>
 #include <PubSubClient.h> 
-#include <SPI.h>
+// #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -36,13 +36,161 @@ float GetWatt();
 
 WiFiClient wiFiClient;
 PubSubClient mqttPubSub(wiFiClient);
-// ACS712 sensor(ACS712_30A, I_Pin);
-// Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT,OLED_MOSI, OLED_CLK, OLED_DC, OLED_RESET, OLED_CS);
+ACS712 sensor(ACS712_20A, I_Pin);
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+void DisplaySlider();
+
+// void DisplaySlider(void *parameter){
+//     for(;;){
+//     display.setCursor(0, 25);
+//     display.setTextSize(2); 
+//     display.write("Energy:     Wh                   ");
+//     display.setCursor(92, 26);
+//     if (wattHours < 10){
+//         display.print("0");
+//         display.print(wattHours);
+//         }
+//     else{
+//         display.print(wattHours);
+//         }
+//     display.display();
+//     // delay(1000);
+//     display.startscrollright(0x00, 0x0F);
+//     vTaskDelay(5000 / portTICK_PERIOD_MS);
+//     display.stopscroll();
+//     display.clearDisplay();
+
+
+
+
+//     if(outlet==true)
+//     {
+//         display.setCursor(0, 25);
+//         display.setTextSize(2); 
+//         display.write("OUTLET ON"); // text
+//         display.display();
+//         display.clearDisplay();
+//         vTaskDelay(1000 / portTICK_PERIOD_MS);
+//         display.setCursor(0, 25);
+//         display.setTextSize(2);  
+        
+//     }
+//     else {
+//         display.setCursor(0, 25);
+//         display.setTextSize(2);  
+//         display.write("OUTLET OFF"); // text
+//         display.display();
+//         display.clearDisplay();
+//         vTaskDelay(1000 / portTICK_PERIOD_MS);
+        
+//     }
+
+//     display.setCursor(0, 0);
+//     display.setTextSize(1.5);  
+//     display.write("Nithub Isocket");
+//     display.display(); 
+//     display.setCursor(0, 16);
+//     display.write("Voltage :");
+//     display.setCursor(0, 26);
+//     display.write("Current :      A");
+//     display.setCursor(0, 36);
+//     display.write("Time    :      H");
+//     display.setCursor(0, 46);
+//     display.write("AmpHour :");
+//     display.setCursor(0, 56);
+//     display.write("Energy  :");
+//     display.setCursor(55, 16);
+//     if (volts < 10){
+//         display.print("0");
+//         display.print(volts);
+//         display.print(" V");
+//         }
+//     else{
+//         display.print(volts);
+//         display.print(" V");
+//         }
+
+//     display.setCursor(55, 26);
+//     if (amps < 10){
+//         display.print("0");
+//         display.print(amps);
+//         }
+//     else{
+//         display.print(amps);
+//         }
+
+//     display.setCursor(55, 36);
+//     if (hours < 10){
+//         display.print("0");
+//         display.print(hours);
+//         display.print(":");
+//         }
+//     else{
+//         display.print(hours);
+//         display.print(":");
+//         }
+//     if (mins < 10){
+//         display.print("0");
+//         display.print(mins);
+//         }
+//     else{
+//         display.print(mins);
+//         }
+
+//     display.setCursor(55, 46);
+//     if (miliAmpHours < 100){
+//         display.print("000");
+//         display.print(miliAmpHours);
+//         display.print(" mAh");
+//             }
+//     else if (miliAmpHours < 1000){
+//         display.print("00");
+//         display.print(miliAmpHours);
+//         display.print(" mAh");
+//             }
+//     else if (miliAmpHours < 10000){
+//         display.print("0");
+//         display.print(miliAmpHours);
+//         display.print(" mAh");
+//             }
+//     else{ 
+//         display.print(miliAmpHours);
+//         display.print(" mAh");
+//             }
+//     display.setCursor(55,56);
+//     if (wattHours < 10){
+//         display.print("0");
+//         display.print(wattHours);
+//         display.print(" Wh");
+//             }
+//     else{
+//         display.print(wattHours);
+//         display.print(" Wh");
+//             }
+
+//     display.display();
+//     display.clearDisplay();
+    
+
+
+//     vTaskDelay(1000 / portTICK_PERIOD_MS);
+//     endMillis = millis();
+
+
+//     }
+
+
+
+// }
+
 
 void setup(){
+    // xTaskCreatePinnedToCore(DisplaySlider,"DisplaySlider", 5000, NULL, 3, NULL, 2);
     pinMode(Switch, INPUT_PULLUP);
     pinMode(RELAY, OUTPUT);
+    pinMode(I_Pin,INPUT);
     Serial.begin(115200);
+    
     
     Serial.println("");
     Serial.println("----------------------------------------------");
@@ -56,52 +204,50 @@ void setup(){
     setup_wifi();
     mqttPubSub.setServer(mqtt_server, mqttPort);
     mqttPubSub.setCallback(MqttReceiverCallback);
-    // sensor.calibrate();
+    sensor.calibrate();
 
     // display.begin(SSD1306_SWITCHCAPVCC);
-    // display.clearDisplay();     // Clear the buffer
-    // display.display();
-    // delay(1000);
-    // display.setTextSize(2); 
-    // display.setTextColor(SSD1306_WHITE);
-    // display.setCursor(0, 25);
-    // //display.cp437(true);
-    // display.write(" Nithub Unilag "); // text
-    // display.display();
-    // delay(1000);
-    // display.write('\n'); // new line
-    // display.setCursor(0, 0);
-    // display.setTextSize(1);  
-    // display.write("Nithub Isocket");
-    // display.display();
-    // display.clearDisplay();
-    // delay(1000);
-    // display.setCursor(0, 0);
-    // display.setTextSize(1);  
-    // display.write("Nithub Isocket");
-    // display.display();  
-    // display.clearDisplay();
-    // delay(500);
-    // display.setCursor(0, 18);
-    // display.setTextSize(1.5);  
-    // display.write("Voltage :");
-    // display.setCursor(55, 18);
-    // display.write("00.00 V");
-    // display.setCursor(0, 30);
-    // display.write("Current :");
-    // display.setCursor(55, 30);
-    // display.write("00.00 A");
-    // display.setCursor(0, 42);
-    // display.write("Time    :");
-    // display.setCursor(55, 42);
-    // display.write("00:00 H");
-    // display.setCursor(0, 54);
-    // display.write("AmpHour :00000 mAh");
-    // display.setCursor(0, 58);
-    // display.write("Energy  :00000 Wh");
-    // display.display();
-    // display.clearDisplay();
-    // starttime = millis() / 1000;
+    if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;);
+  }
+    delay(2000);
+    display.clearDisplay();     // Clear the buffer
+    display.display();
+    delay(1000);
+    display.setTextSize(2); 
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0, 25);
+    //display.cp437(true);
+    display.write("Nithub IOT"); // text
+    display.display();
+    delay(3000);
+    display.write('\n'); // new line
+    display.clearDisplay();
+    
+    display.setCursor(0, 0);
+    display.setTextSize(1);  
+    display.write("Nithub Isocket");
+    display.setCursor(0, 18);
+    display.setTextSize(1.5);  
+    display.write("Voltage :");
+    display.setCursor(55, 18);
+    display.write("00.00 V");
+    display.setCursor(0, 30);
+    display.write("Current :");
+    display.setCursor(55, 30);
+    display.write("00.00 A");
+    display.setCursor(0, 42);
+    display.write("Time    :");
+    display.setCursor(55, 42);
+    display.write("00:00 H");
+    display.setCursor(0, 54);
+    display.write("AmpHour :00000 mAh");
+    display.setCursor(0, 58);
+    display.write("Energy  :00000 Wh");
+    display.display();
+    display.clearDisplay();
+    starttime = millis() / 1000;
 }
 
 void loop(){
@@ -157,12 +303,14 @@ void loop(){
                     Input = 1;
                     RelayStatus = RELAY_ON;
                     digitalWrite(RELAY, RelayStatus);
+                    outlet = true;
                 }
                 else if(digitalRead(Switch) == 0){                      
                     state_input = SWITCH_OFF;
                     Input = 0;
                     RelayStatus = RELAY_OFF;
                     digitalWrite(RELAY, RelayStatus);
+                    outlet = false;
                 }
                     MqttPublishStatus_Relay1();
 
@@ -201,104 +349,150 @@ void loop(){
         amph = miliAmpHours;
         MqttPublishAmph();
     }
-    // if(RelayStatus = RELAY_ON)
-    // {
-    // display.write("OUTLET ON"); // text
-    // display.display();
-    // display.setCursor(0, 0);
-    // display.setTextSize(1.5);  
-    // display.write("Nithub Isocket");
-    // display.display(); 
-    // display.setCursor(0, 16);
-    // display.write("Voltage :");
-    // display.setCursor(0, 26);
-    // display.write("Current :      A");
-    // display.setCursor(0, 36);
-    // display.write("Time    :      H");
-    // display.setCursor(0, 46);
-    // display.write("AmpHour :");
-    // display.setCursor(0, 56);
-    // display.write("Energy  :");
-    // display.setCursor(55, 16);
-    // if (volts < 10){
-    //     display.print("0");
-    //     display.print(volts);
-    //     display.print(" V");
-    //     }
-    // else{
-    //     display.print(volts);
-    //     display.print(" V");
-    //     }
 
-    // display.setCursor(55, 26);
-    // if (amps < 10){
-    //     display.print("0");
-    //     display.print(amps);
-    //     }
-    // else{
-    //     display.print(amps);
-    //     }
+    DisplaySlider();
 
-    // display.setCursor(55, 36);
-    // if (hours < 10){
-    //     display.print("0");
-    //     display.print(hours);
-    //     display.print(":");
-    //     }
-    // else{
-    //     display.print(hours);
-    //     display.print(":");
-    //     }
-    // if (mins < 10){
-    //     display.print("0");
-    //     display.print(mins);
-    //     }
-    // else{
-    //     display.print(mins);
-    //     }
+    
+}
 
-    // display.setCursor(55, 46);
-    // if (miliAmpHours < 100){
-    //     display.print("000");
-    //     display.print(miliAmpHours);
-    //     display.print(" mAh");
-    //         }
-    // else if (miliAmpHours < 1000){
-    //     display.print("00");
-    //     display.print(miliAmpHours);
-    //     display.print(" mAh");
-    //         }
-    // else if (miliAmpHours < 10000){
-    //     display.print("0");
-    //     display.print(miliAmpHours);
-    //     display.print(" mAh");
-    //         }
-    // else{ 
-    //     display.print(miliAmpHours);
-    //     display.print(" mAh");
-    //         }
-    // display.setCursor(55,56);
-    // if (wattHours < 10){
-    //     display.print("0");
-    //     display.print(wattHours);
-    //     display.print(" Wh");
-    //         }
-    // else{
-    //     display.print(wattHours);
-    //     display.print(" Wh");
-    //         }
-
-    // display.display();
-    // display.clearDisplay();
-    // }
-    // else{
-    //     display.write("OUTLET OFF"); // text
-    //     display.display();
-    // }
-
-
+void DisplaySlider(){
+    
+    display.setCursor(0, 25);
+    display.setTextSize(2); 
+    display.write("Energy:     Wh                   ");
+    display.setCursor(92, 26);
+    if (wattHours < 10){
+        display.print("0");
+        display.print(wattHours);
+        }
+    else{
+        display.print(wattHours);
+        }
+    display.display();
     // delay(1000);
+    display.startscrollright(0x00, 0x0F);
+    delay(5000);
+    display.stopscroll();
+    display.clearDisplay();
+
+
+
+
+    if(outlet==true)
+    {
+        display.setCursor(0, 25);
+        display.setTextSize(2); 
+        display.write("OUTLET ON"); // text
+        display.display();
+        display.clearDisplay();
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        display.setCursor(0, 25);
+        display.setTextSize(2);  
+        
+    }
+    else {
+        display.setCursor(0, 25);
+        display.setTextSize(2);  
+        display.write("OUTLET OFF"); // text
+        display.display();
+        display.clearDisplay();
+        delay(1000);
+        
+    }
+
+    display.setCursor(0, 0);
+    display.setTextSize(1.5);  
+    display.write("Nithub Isocket");
+    display.display(); 
+    display.setCursor(0, 16);
+    display.write("Voltage :");
+    display.setCursor(0, 26);
+    display.write("Current :      A");
+    display.setCursor(0, 36);
+    display.write("Time    :      H");
+    display.setCursor(0, 46);
+    display.write("AmpHour :");
+    display.setCursor(0, 56);
+    display.write("Energy  :");
+    display.setCursor(55, 16);
+    if (volts < 10){
+        display.print("0");
+        display.print(volts);
+        display.print(" V");
+        }
+    else{
+        display.print(volts);
+        display.print(" V");
+        }
+
+    display.setCursor(55, 26);
+    if (amps < 10){
+        display.print("0");
+        display.print(amps);
+        }
+    else{
+        display.print(amps);
+        }
+
+    display.setCursor(55, 36);
+    if (hours < 10){
+        display.print("0");
+        display.print(hours);
+        display.print(":");
+        }
+    else{
+        display.print(hours);
+        display.print(":");
+        }
+    if (mins < 10){
+        display.print("0");
+        display.print(mins);
+        }
+    else{
+        display.print(mins);
+        }
+
+    display.setCursor(55, 46);
+    if (miliAmpHours < 100){
+        display.print("000");
+        display.print(miliAmpHours);
+        display.print(" mAh");
+            }
+    else if (miliAmpHours < 1000){
+        display.print("00");
+        display.print(miliAmpHours);
+        display.print(" mAh");
+            }
+    else if (miliAmpHours < 10000){
+        display.print("0");
+        display.print(miliAmpHours);
+        display.print(" mAh");
+            }
+    else{ 
+        display.print(miliAmpHours);
+        display.print(" mAh");
+            }
+    display.setCursor(55,56);
+    if (wattHours < 10){
+        display.print("0");
+        display.print(wattHours);
+        display.print(" Wh");
+            }
+    else{
+        display.print(wattHours);
+        display.print(" Wh");
+            }
+
+    display.display();
+    display.clearDisplay();
+    
+
+
+    delay(1000);
     endMillis = millis();
+
+
+
 }
 
 void MqttPublishCurrent() 
@@ -314,20 +508,13 @@ void MqttPublishCurrent()
 }
 
 float GetCurrent(){
-  int count1 = 20;
-  int a0 = 0;
-  for (int i=0; i< count1; i++) a0 += analogRead(I_Pin); 
-  a0 = a0 / count1;
-  delay(5);
-  float voltage = a0 * 5 / 1023.0;
-  float amps = (voltage - 2.5) / sensitivity;
-  if (amps < 0.1) {
-    amps = 0;
+  float I = sensor.getCurrentAC();
+  if (I < 0.6) {
+    I = 0;
   }
-  // float I = sensor.getCurrentAC();
-  float I = random(2, 5);
-//   return amps;
-    return I;
+  Serial.println(I);
+  delay(500);
+  return I;
 }
 
 
@@ -602,10 +789,14 @@ void MqttReceiverCallback(char* topic, byte* inFrame, unsigned int length){
 
 	if(String(topic) == String(TopicRelay + "/set")) 
     {
-        if(payload == "ON")
+        if(payload == "ON"){
             RelayStatus = RELAY_ON;
-        else if(payload == "OFF")
+            outlet = true;
+            }
+        else if(payload == "OFF"){
             RelayStatus = RELAY_OFF;
+            outlet = false;
+            }
         digitalWrite(RELAY, RelayStatus);
         MqttPublishStatus_Relay1();
     }

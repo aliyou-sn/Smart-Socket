@@ -15,9 +15,9 @@
 #define OLED_CS    12
 #define OLED_RESET 13
 
-const char* ssid = "Aliyu";                             
-const char* password = "macbooker";                           
-const char* mqtt_server = "192.168.43.223";                        
+const char* ssid = "NITDA-ICT-HUB";                             
+const char* password = "6666.2524#";                           
+const char* mqtt_server = "172.16.120.227";                        
 const char* mqttUser = "mqtt_1";                              
 const char* mqttPsw = "0000";                             
 int mqttPort = 1883;                                     
@@ -29,7 +29,7 @@ const char*	manufacturer = "NITHUB";
 
 const int Switch = 4;
 const int RELAY = 2;
-const int I_Pin = 33;
+const int I_Pin = 35;
 bool relay = false;
 unsigned long TimeInputs = 0;
 unsigned long TimeCurrent = 0;
@@ -43,6 +43,7 @@ unsigned long TimeAmph = 0;
 int mqttCounterConn = 0;
 bool InitSystem = true;
 int canPublish = 0;
+bool outlet = false;
 
 
 
@@ -52,7 +53,7 @@ unsigned long msec=0;
 int starttime;
 int activetime;
 int prevoustime = 0;
-float sensitivity = 0.185;  // Set sensitivity for ACS712. 0.185 for 5A, 0.100 for 20A, 0.066 for 30A
+float sensitivity = 0.1;  // Set sensitivity for ACS712. 0.185 for 5A, 0.100 for 20A, 0.066 for 30A
 int r1 = 1000;
 int r2 = 10000;
 
