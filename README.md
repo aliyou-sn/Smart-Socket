@@ -1,7 +1,7 @@
 # Smart-Socket
 
 <p align="center">
-    <a href="https://github.com/Savjee/home-energy-monitor" rel="noopener">
+    <a href="" rel="noopener">
         <img width=200px height=200px src = "https://www.qualityimprint.com/cdn/shop/products/Q143911-wifi-smart-plugs-with-logo-1_large.jpg?v=1570048495" alt="Smart Socket">
     </a>
 </p>
@@ -28,18 +28,18 @@ IOT based Smart socket that monitors electricity consumption of the socket outle
 ## Screenshots
 
 3D model:
-<a href="https://github.com/Savjee/home-energy-monitor" rel="noopener">
+<a href="" rel="noopener">
         <img width=1000px height=600px src = "https://github.com/aliyou-sn/Smart-Socket/blob/main/images/socket3d.png" alt="Smart Socket">
     </a>
 
 Schematics:
 
-<a href="https://github.com/Savjee/home-energy-monitor" rel="noopener">
+<a href="" rel="noopener">
         <img width=1000px height=600px src = "https://github.com/aliyou-sn/Smart-Socket/blob/main/images/Schematic_Isocket.png" alt="Smart Socket">
     </a>
 PCB:
 
-<a href="https://github.com/Savjee/home-energy-monitor" rel="noopener">
+<a href="" rel="noopener">
         <img width=1000px height=600px src = "https://github.com/aliyou-sn/Smart-Socket/blob/main/images/PCB3D.png" alt="Smart Socket">
     </a>
 
