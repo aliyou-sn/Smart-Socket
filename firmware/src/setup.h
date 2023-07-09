@@ -17,7 +17,7 @@
 
 const char* ssid = "NITDA-ICT-HUB";                             
 const char* password = "6666.2524#";                           
-const char* mqtt_server = "172.16.120.227";                        
+const char* mqtt_server = "172.16.121.72";                        
 const char* mqttUser = "mqtt_1";                              
 const char* mqttPsw = "0000";                             
 int mqttPort = 1883;                                     
@@ -28,7 +28,7 @@ const char*	manufacturer = "NITHUB";
 
 
 const int Switch = 4;
-const int RELAY = 2;
+const int RELAY = 12;
 const int I_Pin = 35;
 bool relay = false;
 unsigned long TimeInputs = 0;

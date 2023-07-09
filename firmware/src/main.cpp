@@ -284,6 +284,17 @@ void loop(){
 		    Serial.println("INIT SYSTEM...");
         MqttHomeAssistantDiscovery();
     }
+
+    //Surge detection 
+    if(volts > 250 || amps > 30){
+        RelayStatus = RELAY_OFF;
+        digitalWrite(RELAY, RelayStatus);
+        display.setCursor(0, 25);
+        display.setTextSize(2); 
+        display.write("Surge Detectd!!!"); 
+        display.display();
+        display.clearDisplay();
+    }
     // Inputs Monitor
     if(millis() - TimeInputs > 200){
         TimeInputs = millis();
@@ -512,8 +523,8 @@ float GetCurrent(){
   if (I < 0.6) {
     I = 0;
   }
-  Serial.println(I);
-  delay(500);
+//   Serial.println(I);
+//   delay(500);
   return I;
 }
 
