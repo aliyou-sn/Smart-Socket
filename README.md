@@ -1,4 +1,4 @@
-e# Smart-Socket
+# Smart-Socket
 
 <p align="center">
     <a href="" rel="noopener">
