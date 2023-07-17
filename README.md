@@ -10,15 +10,17 @@
 
 
 
-IOT based Smart socket that monitors electricity consumption of the socket outlet and remote control with home assistant.The total power consumption per hour, voltage level, and current are displayed on an OLED display, and are sent to home assistant via MQTT protocol
+IOT based Smart socket that monitors electricity consumption of the socket outlet and remote control with home assistant.The total power consumption per hour, voltage level, and current are displayed on a display, and are sent to home assistant via MQTT protocol
 
 ## Features
 
-1. Provive realtime power readings
-2. Constant wifi connection
-3. Inbuit MQTT discovery assistant
-4. remote control of the power outlet
-5. Works with Home assistant
+1. Provive realtime power consumption
+2. Surge protection
+3. Constant wifi connection
+4. Inbuit MQTT discovery assistant
+5. remote control of the power outlet
+6. Works with Home assistant
+   
 
 
 
