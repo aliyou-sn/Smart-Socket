@@ -51,7 +51,15 @@ Home assistant discovery:
 <a href="https://github.com/Savjee/home-energy-monitor" rel="noopener">
         <img width=1000px height=600px src = "https://github.com/aliyou-sn/Smart-Socket/blob/main/images/HA.png">
     </a>
-##Testing 
+
+
+
+OUTPUT 
+
+<a href="https://github.com/Savjee/home-energy-monitor" rel="noopener">
+        <img width=1000px height=600px src = "https://github.com/aliyou-sn/Smart-Socket/blob/main/images/3.jpeg">
+    </a>
+## Testing 
 https://github.com/aliyou-sn/Smart-Socket/blob/main/images/test.mp4
 
 ## Hardware Requirements
