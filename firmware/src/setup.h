@@ -17,8 +17,8 @@
 
 const char* ssid = "NITDA-ICT-HUB";                             
 const char* password = "6666.2524#";                           
-const char* mqtt_server = "172.16.121.72";                        
-const char* mqttUser = "mqtt_1";                              
+const char* mqtt_server = "172.16.122.37";                        
+const char* mqttUser = "nithub";                              
 const char* mqttPsw = "0000";                             
 int mqttPort = 1883;                                     
 const char* mqtt_DeviceName = "Isocket_1";                          
